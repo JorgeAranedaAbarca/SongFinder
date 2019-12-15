@@ -1,6 +1,6 @@
 package com.jaranedaa.songfinder.domain.model
 
-data class Song(
+data class Result(
     val artistId: Int,
     val artistName: String,
     val artistViewUrl: String,

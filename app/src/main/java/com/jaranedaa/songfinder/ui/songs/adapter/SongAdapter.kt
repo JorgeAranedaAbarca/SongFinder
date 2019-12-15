@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.jaranedaa.songfinder.R
-import com.jaranedaa.songfinder.domain.model.Song
+import com.jaranedaa.songfinder.domain.model.Result
 
-class SongAdapter(val songList: List<Song>, val context: Context) :
+class SongAdapter(val resultList: List<Result>, val context: Context, val listener: SongAdapterLister) :
     RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
 
@@ -18,19 +19,25 @@ class SongAdapter(val songList: List<Song>, val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return songList.size
+        return resultList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val song = songList.get(position)
+        val song = resultList.get(position)
 
         holder.tvArtistName.text = song.artistName
         holder.tvSongName.text = song.trackName
+        holder.cvSong.setOnClickListener { listener.onClickSong(song) }
     }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvArtistName = view.findViewById(R.id.tvArtistName) as TextView
         val tvSongName = view.findViewById(R.id.tvSongName) as TextView
+        val cvSong = view.findViewById(R.id.cvSong) as CardView
+    }
+
+    interface SongAdapterLister{
+        fun onClickSong(song : Result)
     }
 }

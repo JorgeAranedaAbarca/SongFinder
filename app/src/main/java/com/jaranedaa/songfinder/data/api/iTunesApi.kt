@@ -12,8 +12,11 @@ import retrofit2.http.Query
 interface iTunesApi {
 
     @GET("search")
-    fun getSongByName(@Query("term")term: String, @Query("limit") limit : String) : Deferred<Response<SongResponse>>
+    fun getSongByName(@Query("term")term: String, @Query("limit") limit : String , @Query("mediaType") mediaType : String) : Deferred<Response<SongResponse>>
 
+
+    @GET("lookup")
+    fun getAlbum(@Query("id") collectionId: String, @Query("entity") entity: String) : Deferred<Response<SongResponse>>
 
 
     companion object ApiBuilder{

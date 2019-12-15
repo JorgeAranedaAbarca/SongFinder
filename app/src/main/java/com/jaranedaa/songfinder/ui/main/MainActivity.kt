@@ -1,4 +1,4 @@
-package com.jaranedaa.songfinder.ui
+package com.jaranedaa.songfinder.ui.main
 
 import android.content.Intent
 import android.os.Bundle

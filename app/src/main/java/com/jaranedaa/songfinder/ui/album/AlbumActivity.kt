@@ -1,55 +1,51 @@
-package com.jaranedaa.songfinder.ui.songs
+package com.jaranedaa.songfinder.ui.album
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jaranedaa.songfinder.R
 import com.jaranedaa.songfinder.domain.model.Result
-import com.jaranedaa.songfinder.ui.album.AlbumActivity
-import com.jaranedaa.songfinder.ui.songs.adapter.SongAdapter
-import com.jaranedaa.songfinder.viewModel.SongViewModel
+import com.jaranedaa.songfinder.ui.album.adapter.AlbumAdapter
+import com.jaranedaa.songfinder.viewModel.AlbumViewModel
 
-class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
+class AlbumActivity : AppCompatActivity() {
 
-    private lateinit var name: String
-    private lateinit var songViewModel: SongViewModel
 
-    private lateinit var songAdapter: SongAdapter
+    private lateinit var collectionId: String
+    private lateinit var albumViewModel: AlbumViewModel
+
+    private lateinit var albumAdapter: AlbumAdapter
     private lateinit var mRecyclerView: RecyclerView
 
     private lateinit var progressBar: ProgressBar
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_song)
-
+        setContentView(R.layout.activity_album)
         progressBar = findViewById(R.id.progressBar)
         setUpRecyclerView()
-        name = intent.getStringExtra(ARG_NAME_SONG)
 
-
-        songViewModel = ViewModelProviders.of(this).get(SongViewModel::class.java)
-        val listArtist = Observer<List<Result>> {
+        collectionId = intent.getStringExtra(ARG_COLLECTION_ID)
+        albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
+        val listResult = Observer<List<Result>> {
             setAdapter(it)
         }
-        songViewModel.getSongsLiveData().observe(this, listArtist)
+        albumViewModel.getAlbumLiveData().observe(this, listResult)
 
     }
 
     override fun onResume() {
         super.onResume()
         showLoading()
-        songViewModel.getSongByName(name)
+        albumViewModel.getAlbumByCollectionId(collectionId)
     }
 
     fun setUpRecyclerView() {
-        mRecyclerView = findViewById(R.id.rvSongs) as RecyclerView
+        mRecyclerView = findViewById(R.id.rvAlbum) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -65,22 +61,19 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
 
     }
 
+
     private fun setAdapter(list: List<Result>) {
-        songAdapter = SongAdapter(list, this, this)
-        mRecyclerView.adapter = songAdapter
-        songAdapter.notifyDataSetChanged()
+        albumAdapter = AlbumAdapter(this, list)
+        mRecyclerView.adapter = albumAdapter
+        albumAdapter.notifyDataSetChanged()
         hideLoading()
     }
 
+
     companion object {
-        const val ARG_NAME_SONG: String = "ARG_NAME_SONG"
         const val ARG_COLLECTION_ID: String = "ARG_COLLECTION_ID"
 
     }
 
-    override fun onClickSong(song: Result) {
-        val intent = Intent(this, AlbumActivity::class.java)
-        intent.putExtra(ARG_COLLECTION_ID, song.collectionId.toString())
-        startActivity(intent)
-    }
 }
+

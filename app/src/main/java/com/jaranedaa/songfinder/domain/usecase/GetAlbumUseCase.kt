@@ -3,11 +3,12 @@ package com.jaranedaa.songfinder.domain.usecase
 import com.jaranedaa.songfinder.data.repository.MusicRepository
 import com.jaranedaa.songfinder.domain.model.Result
 
-class GetSongUseCase {
+
+class GetAlbumUseCase {
 
     val musicRepository = MusicRepository()
 
-    suspend fun getSongByName(name : String) : List<Result>{
-        return musicRepository.getSongsByName(name)
+    suspend fun getAlbumByCollectionId(collectionId : String) : List<Result>{
+        return musicRepository.getAlbumByCollectionId(collectionId)
     }
 }
