@@ -1,42 +1,48 @@
 package com.jaranedaa.songfinder.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.jaranedaa.songfinder.R
-import com.jaranedaa.songfinder.domain.model.Artist
+import com.jaranedaa.songfinder.ui.songs.SongActivity
 import com.jaranedaa.songfinder.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
 
-    private lateinit var tvCount : TextView
+    private lateinit var etSearch: TextView
+
+    private lateinit var btnSearch: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvCount = findViewById(R.id.tvCount)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        val listArtist = Observer<List<Artist>>{
-            setAdapter(it)
-        }
+        etSearch = findViewById(R.id.etSearch)
+        btnSearch = findViewById(R.id.btnSearch)
 
-        viewModel.getSongsLiveData().observe(this, listArtist)
-        getInfo()
+        btnSearch.setOnClickListener { searchSongs() }
+
     }
 
-    private fun setAdapter(list: List<Artist>?) {
-        if (list != null) {
-            tvCount.setText(list.size.toString())
+    private fun searchSongs() {
+        if (!etSearch.text.equals("") && etSearch.text.length > 0) {
+            goToNextActivity()
+        }else{
+            etSearch.error = "Por favor escribe una canción"
         }
     }
 
-    private fun getInfo() {
-        viewModel.getSongByName("Aerials")
+    private fun goToNextActivity() {
+        val intent = Intent(this, SongActivity::class.java)
+        intent.putExtra(ARG_NAME_SONG, etSearch.text.toString())
+        startActivity(intent)
+    }
+
+    companion object {
+        const val ARG_NAME_SONG: String = "ARG_NAME_SONG"
     }
 }

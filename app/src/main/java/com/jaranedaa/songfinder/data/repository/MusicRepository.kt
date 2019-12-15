@@ -2,15 +2,15 @@ package com.jaranedaa.songfinder.data.repository
 
 import android.util.Log
 import com.jaranedaa.songfinder.data.api.iTunesApi
-import com.jaranedaa.songfinder.domain.model.Artist
+import com.jaranedaa.songfinder.domain.model.Song
 import java.lang.Exception
 
 class MusicRepository : ApiRepository() {
 
     private val api = iTunesApi.create()
 
-    suspend fun getSongsByName(name: String): List<Artist> {
-        var listArtist = listOf<Artist>()
+    suspend fun getSongsByName(name: String): List<Song> {
+        var listArtist = listOf<Song>()
         try {
             var songResponse = api.getSongByName(name, "20").await()
             if (songResponse.isSuccessful) {

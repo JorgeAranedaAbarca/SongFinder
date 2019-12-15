@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel(){
+class SongViewModel: ViewModel() {
 
     private val getSongUseCase = GetSongUseCase()
     private val listArtist = MutableLiveData<List<Song>>()
