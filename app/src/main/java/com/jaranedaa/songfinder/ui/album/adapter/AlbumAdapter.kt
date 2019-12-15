@@ -10,9 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jaranedaa.songfinder.R
 import com.jaranedaa.songfinder.domain.model.Result
 import com.jaranedaa.songfinder.util.Util.Companion.convertTimeMilesInHoursAndMinutes
+import com.squareup.picasso.Picasso
 
 class AlbumAdapter(val context: Context, val resultList: List<Result>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
+    companion object {
+        const val ITEM_ALBUM: Int = 0
+        const val ITEM_SONG: Int = 1
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -34,11 +41,12 @@ class AlbumAdapter(val context: Context, val resultList: List<Result>) : Recycle
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val song = resultList.get(position)
 
-        if(holder.itemViewType == 0){
+        if(holder.itemViewType == ITEM_ALBUM){
             //album
             val viewHolder :  AlbumViewHolder = holder as AlbumViewHolder
             viewHolder.tvBandName.text = song.artistName
             viewHolder.tvAlbumName.text = song.collectionName
+            Picasso.get().load(song.artworkUrl100).into(viewHolder.imgAlbum)
         }else{
             //songs
             val viewHolder :  SongViewHolder = holder as SongViewHolder
@@ -50,9 +58,9 @@ class AlbumAdapter(val context: Context, val resultList: List<Result>) : Recycle
 
     override fun getItemViewType(position: Int): Int {
         if(resultList.get(position).wrapperType.equals("collection")){
-            return 0
+            return ITEM_ALBUM
         }else{
-            return 1
+            return ITEM_SONG
         }
     }
 

@@ -2,9 +2,13 @@ package com.jaranedaa.songfinder.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.jaranedaa.songfinder.R
 import com.jaranedaa.songfinder.ui.songs.SongActivity
 import com.jaranedaa.songfinder.viewModel.MainViewModel
@@ -22,6 +26,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         etSearch = findViewById(R.id.etSearch)
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        val searchList = Observer<List<String>>{
+
+        }
+
+
+
+        etSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //Perform Code
+                searchSongs()
+                return@OnKeyListener true
+            }
+            false
+        })
         btnSearch = findViewById(R.id.btnSearch)
 
         btnSearch.setOnClickListener { searchSongs() }
@@ -29,9 +49,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchSongs() {
-        if (!etSearch.text.equals("") && etSearch.text.length > 0) {
+        if (etSearch.text.isNotEmpty() && etSearch.text.isNotBlank()) {
             goToNextActivity()
         }else{
+            etSearch.requestFocus()
             etSearch.error = "Por favor escribe una canción"
         }
     }

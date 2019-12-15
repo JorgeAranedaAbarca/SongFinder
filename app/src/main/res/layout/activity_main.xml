@@ -8,7 +8,7 @@
         tools:context=".ui.main.MainActivity">
 
 
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:padding="8dp"
@@ -19,7 +19,9 @@
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Escribe el nombre de la canción que deseas buscar ..."
+                android:maxLines="1"
+                android:inputType="text"
+                android:hint="Escribe una canción o artista ..."
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -27,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buscar"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+                style="@style/TextAppearance.AppCompat.Button"/>
 
 
     </LinearLayout>

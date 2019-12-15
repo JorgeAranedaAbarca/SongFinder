@@ -26,10 +26,14 @@ class AlbumActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album)
+
+
         progressBar = findViewById(R.id.progressBar)
+        collectionId = intent.getStringExtra(ARG_COLLECTION_ID)
+
         setUpRecyclerView()
 
-        collectionId = intent.getStringExtra(ARG_COLLECTION_ID)
+
         albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
         val listResult = Observer<List<Result>> {
             setAdapter(it)

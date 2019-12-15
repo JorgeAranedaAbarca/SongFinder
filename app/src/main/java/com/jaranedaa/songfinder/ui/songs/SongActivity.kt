@@ -1,21 +1,22 @@
 package com.jaranedaa.songfinder.ui.songs
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jaranedaa.songfinder.R
 import com.jaranedaa.songfinder.domain.model.Result
 import com.jaranedaa.songfinder.ui.album.AlbumActivity
 import com.jaranedaa.songfinder.ui.songs.adapter.SongAdapter
 import com.jaranedaa.songfinder.viewModel.SongViewModel
 
-class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
+class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister, SwipeRefreshLayout.OnRefreshListener{
 
     private lateinit var name: String
     private lateinit var songViewModel: SongViewModel
@@ -25,12 +26,17 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
 
     private lateinit var progressBar: ProgressBar
 
+    private lateinit var swipeRefresh : SwipeRefreshLayout
+
+    private lateinit var linearLayoutManager : LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song)
-
-        progressBar = findViewById(R.id.progressBar)
         setUpRecyclerView()
+        progressBar = findViewById(R.id.progressBar)
+        swipeRefresh = findViewById(R.id.swipeRefresh)
+        swipeRefresh.setOnRefreshListener(this)
         name = intent.getStringExtra(ARG_NAME_SONG)
 
 
@@ -51,7 +57,9 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
     fun setUpRecyclerView() {
         mRecyclerView = findViewById(R.id.rvSongs) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        linearLayoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = linearLayoutManager
+
     }
 
     private fun showLoading() {
@@ -66,6 +74,7 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
     }
 
     private fun setAdapter(list: List<Result>) {
+        songViewModel.saveResults(list)
         songAdapter = SongAdapter(list, this, this)
         mRecyclerView.adapter = songAdapter
         songAdapter.notifyDataSetChanged()
@@ -82,5 +91,9 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister{
         val intent = Intent(this, AlbumActivity::class.java)
         intent.putExtra(ARG_COLLECTION_ID, song.collectionId.toString())
         startActivity(intent)
+    }
+
+    override fun onRefresh() {
+
     }
 }

@@ -5,23 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jaranedaa.songfinder.domain.model.Result
 import com.jaranedaa.songfinder.domain.usecase.GetSongUseCase
+import com.jaranedaa.songfinder.domain.usecase.SearchUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel(){
 
-    private val getSongUseCase = GetSongUseCase()
-    private val listArtist = MutableLiveData<List<Result>>()
+    private val searchUseCase = SearchUseCase()
+    private val listSearchs = MutableLiveData<List<String>>()
 
-    fun getSongByName(name: String){
-        GlobalScope.launch(Dispatchers.Main) {
-            listArtist.value = getSongUseCase.getSongByName(name)
-        }
+
+    fun saveSearch(search : String){
+        searchUseCase.saveSearch(search)
     }
 
-    fun getSongsLiveData(): LiveData<List<Result>> {
-        return listArtist
+
+    fun getSearchsLiveData(): LiveData<List<String>> {
+        return listSearchs
     }
 
 
