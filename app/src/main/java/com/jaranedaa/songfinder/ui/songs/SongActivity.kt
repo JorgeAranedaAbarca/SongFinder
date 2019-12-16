@@ -26,7 +26,6 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister, SwipeRe
 
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var swipeRefresh : SwipeRefreshLayout
 
     private lateinit var linearLayoutManager : LinearLayoutManager
 
@@ -35,8 +34,6 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister, SwipeRe
         setContentView(R.layout.activity_song)
         setUpRecyclerView()
         progressBar = findViewById(R.id.progressBar)
-        swipeRefresh = findViewById(R.id.swipeRefresh)
-        swipeRefresh.setOnRefreshListener(this)
         name = intent.getStringExtra(ARG_NAME_SONG)
 
 
@@ -74,11 +71,11 @@ class SongActivity : AppCompatActivity(), SongAdapter.SongAdapterLister, SwipeRe
     }
 
     private fun setAdapter(list: List<Result>) {
+        hideLoading()
         songViewModel.saveResults(list)
         songAdapter = SongAdapter(list, this, this)
         mRecyclerView.adapter = songAdapter
         songAdapter.notifyDataSetChanged()
-        hideLoading()
     }
 
     companion object {

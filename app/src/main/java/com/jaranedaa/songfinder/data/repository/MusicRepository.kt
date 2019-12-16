@@ -3,11 +3,10 @@ package com.jaranedaa.songfinder.data.repository
 import android.util.Log
 import com.jaranedaa.songfinder.data.api.iTunesApi
 import com.jaranedaa.songfinder.domain.model.Result
-import java.lang.Exception
 
-class MusicRepository : ApiRepository() {
+class MusicRepository {
 
-    private val api = iTunesApi.create()
+    var api = iTunesApi.create()
 
     suspend fun getSongsByName(name: String): List<Result> {
         var listArtist = listOf<Result>()

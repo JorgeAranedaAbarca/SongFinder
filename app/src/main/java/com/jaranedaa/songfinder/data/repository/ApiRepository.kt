@@ -1,11 +1,8 @@
 package com.jaranedaa.songfinder.data.repository
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.jaranedaa.songfinder.BuildConfig
 import kotlinx.coroutines.Deferred
 import retrofit2.HttpException
 import retrofit2.Response
-import retrofit2.converter.gson.GsonConverterFactory
 
 open class ApiRepository {
     suspend fun <T> makeRequest(request: () -> Deferred<Response<T>>): T {

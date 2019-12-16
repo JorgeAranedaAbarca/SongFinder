@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.jaranedaa.songfinder.R
 import com.jaranedaa.songfinder.ui.songs.SongActivity
@@ -28,11 +27,6 @@ class MainActivity : AppCompatActivity() {
         etSearch = findViewById(R.id.etSearch)
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        val searchList = Observer<List<String>>{
-
-        }
-
-
 
         etSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
@@ -53,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             goToNextActivity()
         }else{
             etSearch.requestFocus()
-            etSearch.error = "Por favor escribe una canción"
+            etSearch.error = getString(R.string.err_search)
         }
     }
 

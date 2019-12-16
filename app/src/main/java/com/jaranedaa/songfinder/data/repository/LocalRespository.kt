@@ -4,6 +4,11 @@ import com.jaranedaa.songfinder.domain.model.Result
 
 class LocalRespository {
 
+
+    /**
+     * TODO aplicar ROOM sería ideal me falta tiempo :(
+     *
+     */
     private var listSerchs: MutableList<String> = mutableListOf()
     private var listSongResults : MutableList<Result> = mutableListOf()
 

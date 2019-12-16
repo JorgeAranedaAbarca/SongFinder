@@ -3,8 +3,8 @@ package com.jaranedaa.songfinder.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jaranedaa.songfinder.domain.usecase.GetAlbumUseCase
 import com.jaranedaa.songfinder.domain.model.Result
+import com.jaranedaa.songfinder.domain.usecase.GetAlbumUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
