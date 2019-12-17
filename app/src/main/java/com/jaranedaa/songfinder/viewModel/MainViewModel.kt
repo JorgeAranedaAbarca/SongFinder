@@ -1,23 +1,33 @@
 package com.jaranedaa.songfinder.viewModel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jaranedaa.songfinder.domain.usecase.SearchUseCase
+import com.jaranedaa.songfinder.data.room.entities.Search
+import com.jaranedaa.songfinder.domain.usecase.SearchLocalUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel(){
+class MainViewModel : ViewModel() {
 
-    private val searchUseCase = SearchUseCase()
-    private val listSearchs = MutableLiveData<List<String>>()
+    private val listResult = MutableLiveData<List<Search>>()
+    private lateinit var searchLocalUseCase: SearchLocalUseCase
 
 
-    fun saveSearch(search : String){
-        searchUseCase.saveSearch(search)
+    fun setContext(context: Context) {
+        searchLocalUseCase = SearchLocalUseCase(context)
     }
 
+    fun getAllPreviousSearchs() {
+        GlobalScope.launch(Dispatchers.IO) {
+            listResult.postValue(searchLocalUseCase.getAllPreviousSearchs())
+        }
+    }
 
-    fun getSearchsLiveData(): LiveData<List<String>> {
-        return listSearchs
+    fun getSearchsLiveData(): LiveData<List<Search>> {
+        return listResult
     }
 
 

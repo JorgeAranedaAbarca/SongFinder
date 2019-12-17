@@ -29,7 +29,9 @@ class SongAdapter(val resultList: List<Result>, val context: Context, val listen
 
         holder.tvArtistName.text = song.artistName
         holder.tvSongName.text = song.trackName
-        Picasso.get().load(song.artworkUrl100).into(holder.imgAlbumSmall)
+        if(song.artworkUrl100.isNotEmpty()) {
+            Picasso.get().load(song.artworkUrl100).into(holder.imgAlbumSmall)
+        }
 
         holder.cvSong.setOnClickListener { listener.onClickSong(song) }
     }
