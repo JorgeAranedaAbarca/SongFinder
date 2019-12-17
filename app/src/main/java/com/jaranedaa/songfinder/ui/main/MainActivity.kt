@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         etSearch = findViewById(R.id.etSearch)
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
+        viewModel.setContext(this)
         etSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //Perform Code
@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun searchSongs() {
         if (etSearch.text.isNotEmpty() && etSearch.text.isNotBlank()) {
+            viewModel.saveSearch(etSearch.text.toString())
             goToNextActivity()
         }else{
             etSearch.requestFocus()

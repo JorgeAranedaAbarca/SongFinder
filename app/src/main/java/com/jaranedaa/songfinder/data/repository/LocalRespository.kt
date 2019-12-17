@@ -1,30 +1,25 @@
 package com.jaranedaa.songfinder.data.repository
 
-import com.jaranedaa.songfinder.domain.model.Result
+import android.content.Context
+import android.util.Log
+import com.jaranedaa.songfinder.data.room.SongFinderDatabase
+import com.jaranedaa.songfinder.data.room.dao.SearchDao
+import com.jaranedaa.songfinder.data.room.entities.Search
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class LocalRespository {
+class LocalRespository(val context: Context) {
 
+    private var db: SongFinderDatabase? = null
+    private var searchDao: SearchDao? = null
 
-    /**
-     * TODO aplicar ROOM sería ideal me falta tiempo :(
-     *
-     */
-    private var listSerchs: MutableList<String> = mutableListOf()
-    private var listSongResults : MutableList<Result> = mutableListOf()
+    fun saveSearch(search: Search) {
+        db = SongFinderDatabase.getAppDataBase(context)
+        searchDao = db?.SearchDao()
 
-    fun saveSearchResults(result: List<Result>) {
-        listSongResults.addAll(result)
-    }
+        val id = searchDao?.insertSearch(search)
+        Log.i(LocalRespository::class.simpleName, id.toString())
 
-    fun getAllSongResult(): MutableList<Result> {
-        return listSongResults
-    }
-
-    fun saveSearch(search: String) {
-        listSerchs.add(search)
-    }
-
-    fun getAllSearchs(): MutableList<String> {
-        return listSerchs
     }
 }

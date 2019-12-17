@@ -28,7 +28,7 @@ class SongViewModel: ViewModel() {
 
 
     fun saveResults(results : List<Result>){
-        searchUseCase.saveSearchResults(results)
+        //searchUseCase.saveSearchResults(results)
     }
 
 }
