@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SongFinder</string>
     <string name="err_search">No debe estar en blanco</string>
+    <string name="txt_previous_searchs">Historial de Búsquedas</string>
 </resources>

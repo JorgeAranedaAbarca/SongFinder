@@ -15,7 +15,7 @@ interface SearchDao {
 
 
     @Query("SELECT * FROM Search")
-    fun getPreviousSearchs(): List<Search>
+    fun getAllPreviousSearchs(): List<Search>
 
     //update and delete not necessary for now
 }

@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
 
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:padding="8dp"
-                  app:layout_constraintBottom_toBottomOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                  >
+    <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent">
+
         <EditText
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:inputType="text"
                 android:hint="Escribe una canción o artista ..."
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:inputType="text"
+                android:maxLines="1" />
 
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSearch"
+                style="@style/TextAppearance.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buscar"
-                style="@style/TextAppearance.AppCompat.Button"/>
+                android:text="Buscar" />
 
 
     </LinearLayout>
 
+
+    <LinearLayout
+            android:id="@+id/noNetPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/txt_previous_searchs"
+                android:textColor="@color/cardview_dark_background" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearchs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

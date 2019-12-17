@@ -9,7 +9,7 @@ import com.jaranedaa.songfinder.data.room.entities.SearchResult
 interface SearchResultDao {
 
     @Insert
-    fun insertSearchResult(searchResult: SearchResult) : Long
+    fun insertAllSearchResult(searchResult: List<SearchResult>)
 
     @Query("SELECT * FROM SearchResult where searchId == :searchId")
     fun getSearchResultByIdSearch(searchId : Int) : List<SearchResult>
